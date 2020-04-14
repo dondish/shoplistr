@@ -1,6 +1,6 @@
 <template>
 <div>
-    <h1>List {{ this.$route.params.id }}, Amount: {{ totalAmount }}</h1>
+    <h1>List {{ name }}, Amount: {{ totalAmount }}</h1>
     <ul>
         <li v-for="({item: it, amount: am}, index) in list" v-bind:key="it">
             <span>{{it}}: {{am}}</span><button @click="removeFromList(index)">X</button><button @click="modifyInList(index, am+1)">+</button><button @click="modifyInList(index, am-1)">-</button>
@@ -24,7 +24,10 @@ export default {
     },
     computed: {
         list () {
-            return this.$store.state.list;
+            return this.$store.state.list.shoppinglist;
+        },
+        name () {
+            return this.$store.state.list.name;
         },
         totalAmount () {
             return this.$store.getters.totalAmount;
