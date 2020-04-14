@@ -1,0 +1,33 @@
+export const state = (initialList, initalName) => ({
+    list: initialList || [],
+    name: initalName || ''
+})
+
+export const getters = {
+    totalAmount: state => {
+        return state.list.reduce((prev, val) => prev + val.amount, 0);
+    }
+}
+
+export const mutations = {
+    addToList: (state, {item, amount}) => {
+        const r = state.list.find(x => x.item == item);
+        if (r) {
+            r.amount += amount;
+        } else {
+            state.list = [...state.list, {item, amount}];
+        }
+    },
+    emptyList: (state) => {
+        state.list = [];
+    },
+    modifyInList: (state, {index, amount}) => {
+        state.list[index].amount = amount;
+        if (amount == 0) {
+            state.list = state.list.slice(0, index).concat(state.list.slice(index+1));
+        }
+    },
+    removeFromList: (state, index) => {
+        state.list = state.list.slice(0, index).concat(state.list.slice(index+1));
+    }
+}
