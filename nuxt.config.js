@@ -71,13 +71,21 @@ export default {
     }
   },
   vuetify: {
-    theme: {
-      themes: {
-        light: {
-          primary: colors.blue.darken1,
-          secondary: colors.blue.lighten3
+    options: {
+      theme: {
+        themes: {
+          light:  {
+            primary: colors.blue.base,
+            secondary: colors.indigo.base,
+            accent: colors.teal.base,
+            error: colors.red.base,
+            warning: colors.yellow.base,
+            info: colors.cyan.base,
+            success: colors.green.base
+          }
         }
       }
     }
+    
   }
 }

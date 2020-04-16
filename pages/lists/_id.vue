@@ -1,50 +1,61 @@
 <template>
 <div>
-    <h1>List {{ name }}, Amount: {{ totalAmount }}</h1>
-    <v-list>
-        <v-list-item v-for="({item: it, amount: am}, index) in list" v-bind:key="it">
-            <v-list-item-content>
-                <v-list-item-title v-text="it"></v-list-item-title>
-            </v-list-item-content>
-            <v-list-item-content>
-                <v-list-item-subtitle v-text="am + ' left'"></v-list-item-subtitle>
-            </v-list-item-content>
-            <v-list-item-icon @click="modifyInList(index, am+1)">
-                <v-icon>mdi-plus</v-icon>
-            </v-list-item-icon>
-            <v-list-item-icon @click="modifyInList(index, am-1)">
-                <v-icon>mdi-minus</v-icon>
-            </v-list-item-icon>
-            <v-list-item-icon @click="removeFromList(index)">
-                <v-icon>mdi-close</v-icon>
-            </v-list-item-icon>
-        </v-list-item>
-    </v-list>
-    <v-form>
-        <v-container>
-            <v-row>
-                <v-col>
-                    <v-text-field
-                        label="Item"
-                        v-model="item"
-                    >
-                    </v-text-field>
-                </v-col>
-                <v-col>
-                    <v-text-field
-                        label="Amount"
-                        v-model="amount"
-                        :type="number"
-                    >
-                    </v-text-field>
-                </v-col>
-                <v-col>
-                    <v-btn color="primary" text @click="addToList">Add to List</v-btn>
-                </v-col>
-            </v-row>
-        </v-container>
-    </v-form>
+    <v-container>
+        <v-row>
+            <h1>List {{ name }}, Amount: {{ totalAmount }}</h1>
+        </v-row>
+        <v-row>
+            <v-list>
+                <template v-for="({item: it, amount: am}, index) in list">
+                <v-divider v-bind:key="it" v-if="index > 0"></v-divider>
+                <v-list-item v-bind:key="it">
+                    <v-list-item-content>
+                        <v-list-item-title v-text="it"></v-list-item-title>
+                    </v-list-item-content>
+                    <v-list-item-content>
+                        <v-list-item-subtitle v-text="am + ' left'"></v-list-item-subtitle>
+                    </v-list-item-content>
+                    <v-list-item-icon @click="modifyInList(index, am+1)">
+                        <v-icon>mdi-plus</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-icon @click="modifyInList(index, am-1)">
+                        <v-icon>mdi-minus</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-icon @click="removeFromList(index)">
+                        <v-icon>mdi-close</v-icon>
+                    </v-list-item-icon>
+                </v-list-item>
+                </template>
+            </v-list>
+        </v-row>
+        <v-row>
+            <v-form>
+                <v-container>
+                    <v-row>
+                        <v-col>
+                            <v-text-field
+                                label="Item"
+                                v-model="item"
+                            >
+                            </v-text-field>
+                        </v-col>
+                        <v-col>
+                            <v-text-field
+                                label="Amount"
+                                v-model="amount"
+                                :type="number"
+                            >
+                            </v-text-field>
+                        </v-col>
+                        <v-col>
+                            <v-btn color="primary" text @click="addToList">Add to List</v-btn>
+                        </v-col>
+                    </v-row>
+                </v-container>
+            </v-form>
+        </v-row>
     <v-btn color="primary" text @click="emptyList">Empty the List</v-btn>
+    </v-container>
 </div>
 </template>
 
@@ -58,7 +69,7 @@ export default Vue.extend({
     },
     data: () => ({
         item: '',
-        amount: 0
+        amount: ''
     }),
     computed: {
         list () {

@@ -1,11 +1,12 @@
 <template>
-  <v-app dark>
+  <v-app>
     <v-navigation-drawer 
       app 
       v-model="drawer"
       fixed
       nav
       temporary
+      right
       v-if="isMobile"
     >
     
@@ -35,13 +36,13 @@
 
     <v-app-bar 
       app
-      collapse-on-scroll
       v-if="isMobile"
+      dark
+      color="primary"
     >
-      <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
-      <v-spacer></v-spacer>
       <v-toolbar-title>Shoplistr</v-toolbar-title>
       <v-spacer></v-spacer>
+      <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
     </v-app-bar>
 
     <v-app-bar 
@@ -101,7 +102,8 @@ export default {
     items() {
       return [
         { icon: 'mdi-home', name: 'Home', link: '/'},
-        { icon: 'mdi-format-list-bulleted-square', name: 'Lists', link: '/lists'},
+        { icon: 'mdi-format-list-bulleted-square', name: 'Lists', link: '/lists', condition: this.$store.getters['auth/isLoggedIn']},
+        { icon: 'mdi-cog', name: 'Settings', link: '/settings', condition: this.$store.getters['auth/isLoggedIn']},
         { icon: 'mdi-arrow-right-circle', name: 'Log In', link: '/login', condition: !this.$store.getters['auth/isLoggedIn']},
         { icon: 'mdi-arrow-left-circle', name: 'Log Out', link: '/logout', condition: this.$store.getters['auth/isLoggedIn']}
       ]
@@ -110,8 +112,7 @@ export default {
   methods: {
     onResize() {
       this.isMobile = window.innerWidth < 600;
-    },
-    Number: Number
+    }
   }
 }
 </script>
