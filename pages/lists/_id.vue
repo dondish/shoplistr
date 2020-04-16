@@ -19,7 +19,6 @@
             </v-list-item-content>
             <v-list-item-content>
               <v-list-item-subtitle v-text="am" />
-              
             </v-list-item-content>
             <v-list-item-icon @click="modifyInList(index, am+1)">
               <v-btn color="primary" icon>
