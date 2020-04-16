@@ -43,6 +43,7 @@ typings/
 
 # Optional npm cache directory
 .npm
+.yarn
 
 # Optional eslint cache
 .eslintcache
@@ -89,5 +90,3 @@ sw.*
 
 # Vim swap files
 *.swp
-
-

@@ -1,55 +1,120 @@
 <template>
-  <div>
-    <nuxt />
-  </div>
+  <v-app dark>
+    <v-navigation-drawer 
+      app 
+      v-model="drawer"
+      fixed
+      nav
+      temporary
+      v-if="isMobile"
+    >
+    
+    
+    <v-list-item v-if="loggedIn">
+      <v-list-item-avatar>
+        <v-img v-if="user.img" :src="user.img"></v-img>
+        <v-icon v-else >mdi-account-circle</v-icon>
+      </v-list-item-avatar>
+      <v-list-item-content>
+          <v-list-item-title v-text="user.name"></v-list-item-title>
+      </v-list-item-content>
+    </v-list-item>
+    <v-divider v-if="loggedIn"></v-divider>
+    <v-list dense nav>
+      <v-list-item v-for="(item, index) in items.filter(i => i.condition === undefined || i.condition )" router :to="item.link" :key="index" >
+        <v-list-item-icon>
+          <v-icon>{{item.icon}}</v-icon>
+        </v-list-item-icon>
+        <v-list-item-content>
+            <v-list-item-title v-text="item.name"></v-list-item-title>
+        </v-list-item-content>
+    </v-list-item>
+    </v-list>
+    </v-navigation-drawer>
+  
+
+    <v-app-bar 
+      app
+      collapse-on-scroll
+      v-if="isMobile"
+    >
+      <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
+      <v-spacer></v-spacer>
+      <v-toolbar-title>Shoplistr</v-toolbar-title>
+      <v-spacer></v-spacer>
+    </v-app-bar>
+
+    <v-app-bar 
+      app
+      v-else
+    >
+      <v-toolbar-title>Shoplistr</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-icon v-if="!loggedIn">mdi-arrow-right-circle</v-icon>
+      <v-avatar v-else color="blue"><v-icon>mdi-account-circle</v-icon></v-avatar>
+    </v-app-bar>
+
+    <!-- Sizes your content based upon application components -->
+    <v-content>
+      <!-- Provides the application the proper gutter -->
+      <v-container fluid>
+        <nuxt />
+      </v-container>
+    </v-content>
+
+    <v-footer app>
+      <!-- -->
+    </v-footer>
+  </v-app>
 </template>
 
+<script>
+
+export default {
+  fetch() {
+
+  },
+  data()  {
+    return {
+      drawer: false,
+      isMobile: false,
+      
+    }
+  },
+  beforeDestroy () {
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('resize', this.onResize, { passive: true })
+    }
+  },
+  mounted() {
+    this.onResize();
+    window.addEventListener('resize', this.onResize, { passive: true })
+  },
+  computed: {
+    console: () => console,
+    user() {
+      return this.$store.state.auth.user;
+    },
+    loggedIn() {
+      return this.$store.getters['auth/isLoggedIn'];
+    },
+    items() {
+      return [
+        { icon: 'mdi-home', name: 'Home', link: '/'},
+        { icon: 'mdi-format-list-bulleted-square', name: 'Lists', link: '/lists'},
+        { icon: 'mdi-arrow-right-circle', name: 'Log In', link: '/login', condition: !this.$store.getters['auth/isLoggedIn']},
+        { icon: 'mdi-arrow-left-circle', name: 'Log Out', link: '/logout', condition: this.$store.getters['auth/isLoggedIn']}
+      ]
+    } 
+  },
+  methods: {
+    onResize() {
+      this.isMobile = window.innerWidth < 600;
+    },
+    Number: Number
+  }
+}
+</script>
+
 <style>
-html {
-  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
-  font-size: 16px;
-  word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
-}
-
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-  margin: 0;
-}
-
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
-  text-decoration: none;
-  padding: 10px 30px;
-}
-
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
-}
-
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
-}
-
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
-}
 </style>
