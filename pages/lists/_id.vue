@@ -18,7 +18,8 @@
               <v-list-item-title v-text="it" />
             </v-list-item-content>
             <v-list-item-content>
-              <v-list-item-subtitle v-text="am + ' left'" />
+              <v-list-item-subtitle v-text="am" />
+              
             </v-list-item-content>
             <v-list-item-icon @click="modifyInList(index, am+1)">
               <v-btn color="primary" icon>
@@ -40,33 +41,35 @@
         </template>
         <v-list-item>
           <v-list-item-content>
-            <v-row>
-              <v-col cols="6">
-                <v-text-field
-                  v-model="item"
-                  :rules="[
-                    value => value !== '' || 'You need to give it a name.'
-                  ]"
-                  label="Item"
-                />
-              </v-col>
-              <v-col cols="4">
-                <v-text-field
-                  v-model="amount"
-                  :rules="[
-                    value => Number(value) !== NaN || 'Must be a number',
-                    value => value > 0 || 'Amount must be positive'
-                  ]"
-                  label="Amount"
-                  type="number"
-                />
-              </v-col>
-              <v-col class="d-flex" cols="2">
-                <v-btn class="align-self-center" color="primary" icon @click="addToList">
-                  <v-icon>mdi-plus</v-icon>
-                </v-btn>
-              </v-col>
-            </v-row>
+            <v-form>
+              <v-row>
+                <v-col cols="6">
+                  <v-text-field
+                    v-model="item"
+                    :rules="[
+                      value => value !== '' || 'You need to give it a name.'
+                    ]"
+                    label="Item"
+                  />
+                </v-col>
+                <v-col cols="4">
+                  <v-text-field
+                    v-model="amount"
+                    :rules="[
+                      value => value !== '' || 'Must be a valid integer',
+                      value => value > 0 || 'Amount must be positive'
+                    ]"
+                    label="Amount"
+                    type="number"
+                  />
+                </v-col>
+                <v-col class="d-flex" cols="2">
+                  <v-btn class="align-self-center" color="primary" icon @click="addToList">
+                    <v-icon>mdi-plus</v-icon>
+                  </v-btn>
+                </v-col>
+              </v-row>
+            </v-form>
           </v-list-item-content>
         </v-list-item>
       </v-list>
