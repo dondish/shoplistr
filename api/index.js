@@ -18,7 +18,7 @@ router.use((req, res, next) => {
 router.post('/login', (req, res) => {
   if (req.body.username === 'demo' && req.body.password === 'demo') {
     req.session.authUser = { name: 'demo' }
-    return res.json(req.session.authUser);
+    return res.json(req.session.authUser)
   }
   res.status(401).json({ message: 'Bad credentials' })
 })

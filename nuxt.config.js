@@ -2,7 +2,6 @@ import colors from 'vuetify/lib/util/colors'
 import bodyParser from 'body-parser'
 import session from 'express-session'
 
-
 export default {
   mode: 'universal',
   /*
@@ -58,7 +57,7 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
-    
+
   ],
   /*
   ** Build configuration
@@ -67,25 +66,25 @@ export default {
     /*
     ** You can extend webpack config here
     */
-    extend (config, ctx) {
-    }
+    // extend (config, ctx) {
+    // }
   },
   vuetify: {
     options: {
       theme: {
         themes: {
-          light:  {
+          light: {
             primary: colors.blue.base,
             secondary: colors.indigo.base,
             accent: colors.teal.base,
-            error: colors.red.base,
-            warning: colors.yellow.base,
+            error: colors.yellow.base,
+            warning: colors.red.base,
             info: colors.cyan.base,
             success: colors.green.base
           }
         }
       }
     }
-    
+
   }
 }
