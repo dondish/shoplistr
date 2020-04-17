@@ -12,24 +12,60 @@ export const getters = {
 }
 
 export const mutations = {
-  addToList: (state, { item, amount }) => {
-    const r = state.list.shoppinglist.find(x => x.item === item)
-    if (r) {
-      r.amount += amount
-    } else {
-      state.list.shoppinglist = [...state.list.shoppinglist, { item, amount }]
-    }
+  ADD_ITEM: (state, item) => {
+    state.list.shoppinglist = [...state.list.shoppinglist, item]
   },
-  emptyList: (state) => {
+  EMPTY_LIST: (state) => {
     state.list.shoppinglist = []
   },
-  modifyInList: (state, { index, amount }) => {
-    state.list.shoppinglist[index].amount = amount
-    if (amount === 0) {
+  UPDATE_ITEM: (state, { index, item }) => {
+    state.list.shoppinglist[index] = item
+    if (item.amount === 0) {
       state.list.shoppinglist = state.list.shoppinglist.slice(0, index).concat(state.list.shoppinglist.slice(index + 1))
     }
   },
-  removeFromList: (state, index) => {
+  REMOVE_ITEM: (state, index) => {
     state.list.shoppinglist = state.list.shoppinglist.slice(0, index).concat(state.list.shoppinglist.slice(index + 1))
+  }
+}
+
+export const actions = {
+  addToList (ctx, item) {
+    const { name, amount } = item
+    const r = ctx.state.list.shoppinglist.find(x => x.name === name)
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        if (r) {
+          ctx.commit('UPDATE_ITEM', { index: ctx.state.list.shoppinglist.indexOf(x => x.name === name), item: { amount: r.amount + amount, ...r } })
+        } else {
+          ctx.commit('ADD_ITEM', item)
+        }
+        resolve()
+      }, 200)
+    })
+  },
+  emptyList (ctx) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        ctx.commit('EMPTY_LIST')
+        resolve()
+      }, 200)
+    })
+  },
+  updateItem (ctx, { index, item }) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        ctx.commit('UPDATE_ITEM', { index, item })
+        resolve()
+      }, 200)
+    })
+  },
+  removeItem (ctx, index) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        ctx.commit('REMOVE_ITEM', { index })
+        resolve()
+      }, 200)
+    })
   }
 }

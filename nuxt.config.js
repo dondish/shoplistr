@@ -51,7 +51,21 @@ export default {
   */
   buildModules: [
     '@nuxt/typescript-build',
-    '@nuxtjs/vuetify'
+    ['@nuxtjs/vuetify', {
+      theme: {
+        themes: {
+          light: {
+            primary: colors.blue.base,
+            secondary: colors.indigo.base,
+            accent: colors.teal.base,
+            error: colors.red.base,
+            warning: colors.red.base,
+            info: colors.cyan.base,
+            success: colors.green.base
+          }
+        }
+      }
+    }]
   ],
   /*
   ** Nuxt.js modules
@@ -70,21 +84,6 @@ export default {
     // }
   },
   vuetify: {
-    options: {
-      theme: {
-        themes: {
-          light: {
-            primary: colors.blue.base,
-            secondary: colors.indigo.base,
-            accent: colors.teal.base,
-            error: colors.yellow.base,
-            warning: colors.red.base,
-            info: colors.cyan.base,
-            success: colors.green.base
-          }
-        }
-      }
-    }
 
   }
 }
